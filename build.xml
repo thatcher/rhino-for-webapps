@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- You may freely edit this file. See commented blocks below for -->
+<!-- some examples of how to customize the build. -->
+<!-- (If you delete it and reopen the project it will be recreated.) -->
+<project name="rhino-for-webapps" default="default" basedir=".">
+    <description>Builds project files</description>
+    
+    
+    <property description="major release number" name="major" value="0" />
+    <property description="minor release number" name="minor" value="1" />
+    
+    <property description="Java Jars" name="JAVA_LIB_DIR" location="WEB-INF/lib" />
+    <property description="Rhino JS Engine" name="RHINO_JAR" location="${JAVA_LIB_DIR}/js.jar" />
+    <property description="JSLint Syntax Engine" name="JSLINT_JAR" location="${JAVA_LIB_DIR}/jslint4java-1.1.jar" />
+    <property description="Javax Servlet API" name="SERVLET_JAR" location="../../lib/servlet-api.jar" />
+    <property description="Log4j Logging API" name="LOG4J_JAR" location="${JAVA_LIB_DIR}/log4j-1.2.15.jar" />
+
+    <property name="PREFIX"         location="${basedir}/"                  description="Target parent folder for built files"   />
+    <property name="SRC_DIR"        location="${PREFIX}/src"                description="Folder for source files"  />
+    <property name="DOCS_DIR"       location="${PREFIX}/docs"               description="Folder for docs target"  />
+    <property name="TEST_DIR"       location="${PREFIX}/test"               description="Folder for test target"  />
+    <property name="DIST_DIR"       location="${PREFIX}/dist"               description="Folder for jquery, min, lite and packed target" />
+    <property name="BUILD_DIR"      location="${PREFIX}/build"               description="Folder for build artifacts" />
+    <property name="CLASSES_DIR"    location="${basedir}/WEB-INF/classes"   description="Local Classes like Servlets"  />
+
+    <!-- Files names for distribution -->
+    <property name="CLAYPOOL_JAR"   			location="${DIST_DIR}/claypool.${major}.${minor}.jar" />
+    
+    <!-- Plugin File Names for Distribution -->
+    
+    <!-- BUILD TARGETS -->
+    <target name="default" depends="compile"/>
+    
+    <target name="all" depends="default"/>
+    
+    <target name="compile">
+        <javac srcdir="${CLASSES_DIR}" source="1.5" target="1.5">
+            <classpath>
+                <path location="${RHINO_JAR}"/>
+                <path location="${SERVLET_JAR}"/>
+                <path location="${LOG4J_JAR}"/>
+            </classpath>
+        </javac>
+    </target>
+    
+    <target name="clean">
+        <delete dir="${DIST_DIR}" />
+        <delete dir="${BUILD_DIR}" />
+    </target>
+    
+    
+</project>
