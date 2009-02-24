@@ -4,19 +4,19 @@ h1. rhino-for-webapps : A simple javascipting platform for java serlvet containe
 
 h3. Major Contributers:
 
-Chris Thatcher (http://github.com/thatcher)
+"Chris Thatcher":http://github.com/thatcher
 
 h2. GitHub repositories:
 
-http://github.com/thatcher/rhino-for-webapps/
+"GitHub rhino-for-webapps":http://github.com/thatcher/rhino-for-webapps/
 
 h2. Mailing List:
 
-http://groups.google.com/group/rhino-for-webapps/
+"GoogleGroups rhino-for-webapps":http://groups.google.com/group/rhino-for-webapps/
 
 h2. Lighthouse (Bug Tracking):
 
-http://claypooljs.lighthouseapp.com/projects/26082-rhino-for-webapps/
+"Lighthouse rhino-for-webapps":http://claypooljs.lighthouseapp.com/projects/26082-rhino-for-webapps/
 
 h2. Building:
 
@@ -27,4 +27,4 @@ h2. Building:
 
 h3. Related Technology Links
 
- * Rhino (Java-based JavaScript engine) http://www.mozilla.org/rhino/
+"Rhino (Java-based JavaScript engine)":http://www.mozilla.org/rhino/
