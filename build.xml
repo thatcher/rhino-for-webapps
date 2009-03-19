@@ -29,7 +29,7 @@
     <!-- Plugin File Names for Distribution -->
     
     <!-- BUILD TARGETS -->
-    <target name="default" depends="compile"/>
+    <target name="default" depends="compile, jar"/>
     
     <target name="all" depends="default"/>
     
@@ -48,5 +48,9 @@
         <delete dir="${BUILD_DIR}" />
     </target>
     
+    <target name="jar">
+        <mkdir dir="${DIST_DIR}"/>
+        <jar destfile="${CLAYPOOL_JAR}" basedir="${CLASSES_DIR}" />
+    </target>
     
 </project>

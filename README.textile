@@ -1,3 +1,4 @@
+
 h1. rhino-for-webapps : A simple javascipting platform for java serlvet containers
 
 <strong>Developed by Chris Thatcher</strong>
@@ -27,4 +28,5 @@ h2. Building:
 
 h3. Related Technology Links
 
-"Rhino (Java-based JavaScript engine)":http://www.mozilla.org/rhino/
+"Rhino - Java-based JavaScript engin)":http://www.mozilla.org/rhino/
+
