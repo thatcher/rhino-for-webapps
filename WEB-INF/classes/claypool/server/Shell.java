@@ -108,7 +108,9 @@ public class Shell extends ScriptableObject implements FileListener{
     }
     
     private void processFile(String fileName){
-    	if(!fileName.matches("^(file|http|https)")){
+    	if(!(fileName.startsWith("file:") || 
+    		 fileName.startsWith("http:") ||
+    		 fileName.startsWith("https:"))){
 	        String absoluteFileName = this.basePath  + fileName;
 	        this.processAbsoluteFile(absoluteFileName);
     	}else{
