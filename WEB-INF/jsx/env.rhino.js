@@ -39,10 +39,10 @@ var __env__ = {};
         if(m&&m.length>1){
             return new java.net.URL(path).toString();
         }else if(base){
-          return new java.net.URL(base + '/' + path).toString();
+          return new java.net.URL(new java.net.URL(base), path).toString();
         }else{
             //return an absolute url from a relative to the file system
-            return new java.io.File( path).toURL().toString();
+            return new java.io.File( path ).toURL().toString();
         }
     };
     
@@ -214,7 +214,7 @@ var __env__ = {};
     };
     
     $env.loadLocalScript = function(script){
-        print(" loading script ");
+        print("loading script ");
         var types, type, src, i, base;
         try{
             if(script.type){
@@ -224,9 +224,7 @@ var __env__ = {};
                         if(script.src){
                             print("loading allowed external script :" + script.src);
                             base = "" + window.location;
-                            load(script.src);
-                            script.src = "";
-                            script.type = "";
+                            load($env.location(script.src, base.substring(0, base.lastIndexOf("/"))));
                         }else{
                             $env.loadInlineScript(script);
                         }
