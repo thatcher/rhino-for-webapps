@@ -7,7 +7,7 @@
     
     
     <property description="major release number" name="major" value="0" />
-    <property description="minor release number" name="minor" value="1" />
+    <property description="minor release number" name="minor" value="2" />
     
     <property description="Java Jars" name="JAVA_LIB_DIR" location="WEB-INF/lib" />
     <property description="Rhino JS Engine" name="RHINO_JAR" location="${JAVA_LIB_DIR}/js.jar" />
@@ -29,7 +29,7 @@
     <!-- Plugin File Names for Distribution -->
     
     <!-- BUILD TARGETS -->
-    <target name="default" depends="compile"/>
+    <target name="default" depends="compile, jar"/>
     
     <target name="all" depends="default"/>
     
@@ -48,5 +48,9 @@
         <delete dir="${BUILD_DIR}" />
     </target>
     
+    <target name="jar">
+        <mkdir dir="${DIST_DIR}"/>
+        <jar destfile="${CLAYPOOL_JAR}" basedir="${CLASSES_DIR}" />
+    </target>
     
 </project>

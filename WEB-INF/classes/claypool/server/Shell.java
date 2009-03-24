@@ -107,9 +107,13 @@ public class Shell extends ScriptableObject implements FileListener{
         return ScriptableObject.callMethod(this, methodName, args);
     }
     
-    private void processFile(String relativeFileName){
-        String absoluteFileName = this.basePath  + relativeFileName;
-        this.processAbsoluteFile(absoluteFileName);
+    private void processFile(String fileName){
+    	if(!fileName.matches("^(file|http|https)")){
+	        String absoluteFileName = this.basePath  + fileName;
+	        this.processAbsoluteFile(absoluteFileName);
+    	}else{
+    		this.processAbsoluteFile(fileName);
+    	}
     }
     /**
      * Evaluate JavaScript source file.
