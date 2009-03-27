@@ -1,1 +1,1 @@
-<jsp:forward page="index.jsx" />
+<jsp:forward page="/jsx/" />

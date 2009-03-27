@@ -5,6 +5,8 @@ import java.io.File;
 import java.lang.ref.WeakReference;
 import java.io.*;
 
+import org.apache.log4j.Logger;
+
 public class FileMonitor {
     private Timer timerObj;
     private HashMap fileObjects; // File -> Long
@@ -12,6 +14,7 @@ public class FileMonitor {
     public static String fileChanged = "Not Changed";
     public static String status = "No Change";
     
+    static Logger logger = Logger.getLogger("claypool.server.FileMonitor");
     /**
     * Create a file monitor instance with specified polling interval.
     *
@@ -44,6 +47,7 @@ public class FileMonitor {
     * @param file File to listen for.
     */
     public void addFile (File file) {
+        logger.debug("adding file to monitor "+ file);
         if (!fileObjects.containsKey (file)) {
             long modifiedTime = file.exists() ? file.lastModified() : -1;
             fileObjects.put (file, new Long (modifiedTime));
@@ -109,12 +113,14 @@ public class FileMonitor {
             // Use a copy of the list in case listener wants to alter the
             // list within its fileChanged method.
             Collection files = new ArrayList (fileObjects.keySet());
-            
+            logger.debug("checking file status, will notify if changed.");
             for (Iterator i = files.iterator(); i.hasNext(); ) {
                 File file = (File) i.next();
                 long lastModifiedTime = ((Long) fileObjects.get (file)).longValue();
                 long newModifiedTime = file.exists() ? file.lastModified() : -1;
                 
+                logger.debug(file.getName()+ " -> newModifiedTime(" +newModifiedTime +
+                                         ") lastModifiedTime(" + lastModifiedTime +")");
                 // Chek if file has changed
                 if (newModifiedTime != lastModifiedTime) {
                 
@@ -131,7 +137,7 @@ public class FileMonitor {
                             j.remove();
                         } else {
                             status = "Changed";
-                            //System.out.println(status);
+                            logger.info(file.getName() + " -> changed");
                             listener.fileChanged (file);
                             
                         }
