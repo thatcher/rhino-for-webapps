@@ -1,0 +1,40 @@
+<html>
+    <head>
+        <title>Claypool Server</title>
+    </head>
+    <body>
+        <div>
+            <h1>Claypool Server Status</h1>
+            <p id='currentDate'></p>
+            <div>
+                <h2>Application Global Details</h2>
+                <ul id="globalDetails"></ul>
+            </div>
+            <div>
+                <h2>Application Location Details</h2>
+                <ul id="locationDetails"></ul>
+            </div>
+            <div>
+                <h2>Application Navigator Details</h2>
+                <ul id="navigatorDetails"></ul>
+            </div>
+        </div>
+        <script type="text/envjs">
+            var detail = function (id,obj,name){
+                var prop, list = document.getElementById(id);
+                for(prop in obj){
+                    var list_item = document.createElement('li');
+                    var item_text = document.createTextNode(prop+" -> "+obj[prop]);
+                    list_item.appendChild(item_text);
+                    list.appendChild(list_item);
+                }
+            };
+            detail('globalDetails', window, "Global");
+            detail('locationDetails',  window.location, "Location");
+            detail('navigatorDetails',  window.navigator, "Navigator");
+            
+            var currentDate = document.createTextNode('The current time is : '+ new Date());
+            document.getElementById('currentDate').appendChild(currentDate);
+        </script>
+    </body>
+</html>

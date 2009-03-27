@@ -1,12 +1,10 @@
 //When the servlet is first visited the 'outer shell'
 //is loaded.  You can load additional resources here.
 try{
-    print("\n\n\t@Loading shell for core example@\n");
+    print("\n\n\t@Loading shell for envjs examples@\n");
 
+    load('../lib/env.rhino.0.9.0.js');
     load('dispatcher.js');
-    load('index.jsx');
-    load('request.jsx');
-    load('status.jsx');
     
     print("Loaded shell.");
 }catch(e){
@@ -14,6 +12,6 @@ try{
             "\t * ERROR LOADING SHELL!!"+
             "\t *    details :"+
             "\t *    " + e.toString() + 
-            "\t ********************************************************/" );
+            "\t ********************************************************/"  );
 }
 

@@ -26,7 +26,9 @@ public class Servlet extends HttpServlet {
     protected String shellFile;//applicationContainer;
     protected String dispatchFunction;//applicationLocation;
     protected String base;//applicationBasePath;
+    protected String contextPath;//applicationBasePath;
     private Shell shell;
+    private RequestHandler requestHandler;
     
     /* (non-Javadoc)
      * @see javax.servlet.GenericServlet#init(javax.servlet.ServletConfig)
@@ -34,46 +36,62 @@ public class Servlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
         String localBase = getServletConfig().getServletContext().getRealPath("/").toString();
+        this.contextPath = localBase;
         this.base  = config.getInitParameter("script-base")!=null?
             localBase + config.getInitParameter("script-base"):
             localBase + "/WEB-INF/jsx/";
         this.shellFile = config.getInitParameter("shell");
         this.dispatchFunction  = config.getInitParameter("dispatch-function");
-        getServletConfig().getServletContext().log("Application ready... ");
+        
+        if(this.shell == null){
+            //load global shell
+            try {
+                this.base = new File(this.base).toURL().toString();
+                getServletConfig().getServletContext().
+                    log("APPLICATION BASE PATH : " + this.base);
+                getServletConfig().getServletContext().
+                    log("APPLICATION SHELL : " + this.shellFile);
+                getServletConfig().getServletContext().
+                    log("APPLICATION DISPATCH METHOD : " + this.dispatchFunction);
+                // load the JavaScript files for the web app framework and
+                // the files for the specific web app.
+                this.shell = new Shell(this.contextPath, this.base, this.shellFile);
+            }catch (Exception ee) {
+                getServletConfig().getServletContext().
+                    log(ee.toString());
+            }
+        }
+        
+        if(this.requestHandler == null){
+            this.requestHandler = new RequestHandler(
+                this.shell, 
+                this.dispatchFunction, 
+                getServletConfig().getServletContext());
+        }
+        
+        getServletConfig().getServletContext().
+            log("Application ready... ");
     }
 
     /* (non-Javadoc)
      * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if(this.shell == null){
-            //load global shell
-            try {
-                base = new File(base).toURL().toString();
-                getServletConfig().getServletContext().log("APPLICATION BASE PATH : "+base);
-                getServletConfig().getServletContext().log("APPLICATION SHELL : "+ shellFile);
-                getServletConfig().getServletContext().log("APPLICATION DISPATCH METHOD : "+ dispatchFunction);
-                // load the JavaScript files for the web app framework and
-                // the files for the specific web app.
-                this.shell = new Shell(base, shellFile);
-            }catch (Exception ee) {
-                getServletConfig().getServletContext().log(ee.toString());
-            }
-        }
-        HttpSession session = request.getSession(true);
-        RequestHandler requestHandler = (RequestHandler)session.getValue("requestHandler");
-        if(requestHandler == null){
-            getServletConfig().getServletContext().log("CONTEXT PATHNAME : " + request.getContextPath());
-            getServletConfig().getServletContext().log("SERVLET PATHNAME : " + request.getServletPath());
-            requestHandler = new RequestHandler(
-                shell, 
-                dispatchFunction, 
-                getServletConfig().getServletContext());
-            session.putValue("requestHandler", requestHandler);
-        }
-        if(!requestHandler.processRequest(request, response)){
+        
+        getServletConfig().getServletContext().
+            log("CONTEXT PATHNAME : " + request.getContextPath());
+        getServletConfig().getServletContext(). 
+            log("SERVLET PATHNAME : " + request.getServletPath());
+        
+        //HttpSession session = request.getSession(true);
+        //RequestHandler requestHandler = 
+            //(RequestHandler)session.getValue(request.getServletPath());
+        //session.putValue(request.getServletPath(), requestHandler);
+        
+        if(!this.requestHandler.processRequest(request, response)){
             String staticResource = base + request.getPathInfo();
-            getServletConfig().getServletContext().log("Forwarding 404 to real resource if available: " + staticResource);
+            getServletConfig().getServletContext().
+                log("Forwarding 404 to real resource if available: " + staticResource);
             response.reset();
             getServletConfig()
                 .getServletContext()

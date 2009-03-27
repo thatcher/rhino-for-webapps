@@ -8,10 +8,18 @@
         <servlet-class>claypool.server.Log4jInit</servlet-class>
         <init-param>
           <param-name>log4j-init-file</param-name>
-          <param-value>WEB-INF/classes/claypool.server.lcf</param-value>
+          <param-value>WEB-INF/logging.conf</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    
+    <!--
+       All servlets below are the same class but are
+       used to serve different examples. The rhino-dispatcher
+       is the most general use of rhino and show the very 
+       basics of how to use this codebase to javascript some
+       servlets.
+    -->
     <servlet>
         <servlet-name>rhino-dispatcher</servlet-name>
         <servlet-class>claypool.server.Servlet</servlet-class>    
@@ -31,8 +39,37 @@
     </servlet>  
     <servlet-mapping>
         <servlet-name>rhino-dispatcher</servlet-name>
-        <url-pattern>*.jsx</url-pattern>
+        <url-pattern>/jsx/</url-pattern>
     </servlet-mapping>
+    
+    <!--
+        This servlet uses envjs to give you a taste of how to
+        script the servlet more like a client by providing
+        a simulated browser environment.
+    -->
+    <servlet>
+        <servlet-name>env-rhino-dispatcher</servlet-name>
+        <servlet-class>claypool.server.Servlet</servlet-class>    
+        <init-param>
+          <param-name>script-base</param-name>
+          <param-value>/WEB-INF/examples/envjs</param-value>
+        </init-param> 
+        <init-param>
+          <param-name>shell</param-name>
+          <param-value>shell.js</param-value>
+        </init-param>   
+        <init-param>
+          <param-name>dispatch-function</param-name>
+          <param-value>dispatch_envjs</param-value>
+        </init-param>  
+        <load-on-startup>1</load-on-startup>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name>env-rhino-dispatcher</servlet-name>
+        <url-pattern>/examples/envjs/</url-pattern>
+    </servlet-mapping>
+    
+    
     <session-config>
         <session-timeout>
             30 

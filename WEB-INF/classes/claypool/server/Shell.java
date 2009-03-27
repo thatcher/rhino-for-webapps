@@ -29,9 +29,11 @@ public class Shell extends ScriptableObject implements FileListener{
     private Context cx;
     private String shellFile;
     private String basePath;
-    private FileMonitor monitor = new FileMonitor (1500);
+    private String contextPath;
+    private FileMonitor monitor = new FileMonitor (3000);
     
-    public Shell(String basePath, String appFile) {
+    public Shell(String contextPath, String basePath, String appFile) {
+        this.contextPath = contextPath;
         this.basePath = basePath;
         
         cx = Context.enter();
@@ -46,6 +48,8 @@ public class Shell extends ScriptableObject implements FileListener{
         String[] names = {"load", "print", "runCommand"};
         defineFunctionProperties(names, Shell.class, ScriptableObject.PERMANENT);
         
+        //start a file listener so folks can modify scripts 
+        //without restarting the server
         monitor.addListener(this);
         try{
             this.loadFile(appFile);
@@ -54,6 +58,7 @@ public class Shell extends ScriptableObject implements FileListener{
             System.out.println(e.toString());
             logger.error(e.toString());
         }
+        
     }
 
     public String getClassName() {
@@ -108,12 +113,13 @@ public class Shell extends ScriptableObject implements FileListener{
     }
     
     private void processFile(String fileName){
-    	if(!fileName.matches("^(file|http|https)")){
-	        String absoluteFileName = this.basePath  + fileName;
-	        this.processAbsoluteFile(absoluteFileName);
-    	}else{
-    		this.processAbsoluteFile(fileName);
-    	}
+        if(fileName.startsWith("file")||
+            fileName.startsWith("http")){
+            this.processAbsoluteFile(fileName);
+        }else{
+            String absoluteFileName = this.basePath  + fileName;
+            this.processAbsoluteFile(absoluteFileName);
+        }
     }
     /**
      * Evaluate JavaScript source file.
@@ -128,13 +134,14 @@ public class Shell extends ScriptableObject implements FileListener{
             // reloads changed files
             
             URL url = new URL(absoluteFileName);
-    		URLConnection uc = url.openConnection();
+            URLConnection uc = url.openConnection();
     
-    		InputStreamReader input = new InputStreamReader(uc.getInputStream());
-    		in = new BufferedReader(input);
+            InputStreamReader input = new InputStreamReader(uc.getInputStream());
+            in = new BufferedReader(input);
 
-            if(absoluteFileName.startsWith("file:/")){
-                monitor.addFile (new File (absoluteFileName));
+            if(absoluteFileName.startsWith("file:")){
+                logger.debug("adding local file to reload monitor " + url.getFile());
+                monitor.addFile (new File (url.getFile()));
             }
         }
         catch (IOException ex) {
@@ -169,16 +176,17 @@ public class Shell extends ScriptableObject implements FileListener{
         //think to do is modify/touch WEB-INF/web.xml to force a reload.
         logger.info("Detected change to application sources.  Reloading...");
         try{
-            logger.info("Trying default reload trigger (/WEB-INF/web.xml)");
-            File webXml = new File(this.basePath + "/WEB-INF/web.xml");
+            logger.info("Trying default reload trigger ("+this.contextPath +"/WEB-INF/web.xml)");
+            File webXml = new File(this.contextPath + "/WEB-INF/web.xml");
             webXml.setLastModified(new java.util.Date().getTime());
         }catch(Exception e){
             //ignore logger.error(ioe.toString());
         }
-        //Damn jetty thinks maven is the shit.  
+        //Dxmn jetty thinks maven is the shxt.  
         try{
-            logger.info("Trying jetty reload trigger (/scripts/server/contexts/claypool.xml)");
-            File webXml = new File(this.basePath + "/scripts/server/contexts/claypool.xml");
+            logger.info("Trying jetty reload trigger ( "+
+                this.contextPath + "/scripts/server/contexts/claypool.xml)");
+            File webXml = new File(this.contextPath + "/scripts/server/contexts/claypool.xml");
             webXml.setLastModified(new java.util.Date().getTime());
         }catch(Exception e){
             //ignore logger.error(ioe.toString());
