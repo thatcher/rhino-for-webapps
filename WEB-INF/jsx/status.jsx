@@ -8,9 +8,11 @@ StatusServlet.prototype.html = function(request, response){
     var detail = function(obj,name){
         var list = <></>,prop;
         for(prop in obj){
-                list+=<li>{prop + ": " + obj[prop]}</li>;
+                list += <li>{prop + ": " + obj[prop]}</li>;
         }
-        return list.length()>0?list:list+=<li>No {name} Properties Details</li>;
+        return list.length()>0 ? 
+			list : 
+			list += <li>No {name} Properties Details</li>;
     }; 
     response.body = <html>
         <head>

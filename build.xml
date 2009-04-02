@@ -7,7 +7,7 @@
     
     
     <property description="major release number" name="major" value="0" />
-    <property description="minor release number" name="minor" value="3" />
+    <property description="minor release number" name="minor" value="4" />
     
     <property description="Java Jars" name="JAVA_LIB_DIR" location="WEB-INF/lib" />
     <property description="Rhino JS Engine" name="RHINO_JAR" location="${JAVA_LIB_DIR}/js.jar" />

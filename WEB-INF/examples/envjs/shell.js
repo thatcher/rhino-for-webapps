@@ -3,7 +3,7 @@
 try{
     print("\n\n\t@Loading shell for envjs examples@\n");
 
-    load('../lib/env.rhino.0.9.0.js');
+    load('../lib/env.rhino.0.9.1.js');
     load('dispatcher.js');
     
     print("Loaded shell.");
