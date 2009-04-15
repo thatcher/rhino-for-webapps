@@ -43,6 +43,7 @@ public class Shell extends ScriptableObject implements FileListener{
         // Give easy access to the global object by making a global property named "global".
         // This is the same as how "window" is used in browser scripting.
         defineProperty("global", this, ScriptableObject.DONTENUM);
+        defineProperty("cwd", this.contextPath, ScriptableObject.DONTENUM);
         
         // global functions
         String[] names = {"load", "print", "runCommand"};

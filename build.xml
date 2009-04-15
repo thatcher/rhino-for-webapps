@@ -8,6 +8,8 @@
     
     <property description="major release number" name="major" value="0" />
     <property description="minor release number" name="minor" value="4" />
+    <property description="build number" name="number" value="2" />
+    <property description="build id" name="build_id" value="${major}.${minor}.${number}" />
     
     <property description="Java Jars" name="JAVA_LIB_DIR" location="WEB-INF/lib" />
     <property description="Rhino JS Engine" name="RHINO_JAR" location="${JAVA_LIB_DIR}/js.jar" />
@@ -24,7 +26,7 @@
     <property name="CLASSES_DIR"    location="${basedir}/WEB-INF/classes"   description="Local Classes like Servlets"  />
 
     <!-- Files names for distribution -->
-    <property name="CLAYPOOL_JAR"   			location="${DIST_DIR}/claypool.${major}.${minor}.jar" />
+    <property name="CLAYPOOL_JAR"   			location="${DIST_DIR}/claypool.${build_id}.jar" />
     
     <!-- Plugin File Names for Distribution -->
     
