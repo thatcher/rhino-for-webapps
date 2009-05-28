@@ -30,12 +30,18 @@ public class Shell extends ScriptableObject implements FileListener{
     private String shellFile;
     private String basePath;
     private String contextPath;
-    private FileMonitor monitor = new FileMonitor (3000);
+    private String activeReload;
+    private FileMonitor monitor;
     
-    public Shell(String contextPath, String basePath, String appFile) {
+    public Shell(String contextPath, String basePath, String appFile, String activeReload) {
         this.contextPath = contextPath;
         this.basePath = basePath;
-        
+        this.activeReload = activeReload;
+		if(activeReload == "true"){
+			monitor = new FileMonitor (3000);
+		}else{
+			monitor = null;
+		}
         cx = Context.enter();
         cx.initStandardObjects(this);
         // host objects --------------
@@ -51,10 +57,14 @@ public class Shell extends ScriptableObject implements FileListener{
         
         //start a file listener so folks can modify scripts 
         //without restarting the server
-        monitor.addListener(this);
+        if(monitor!=null){
+			monitor.addListener(this);
+		}
         try{
             this.loadFile(appFile);
-            monitor.addFile (new File (basePath+appFile));
+			if(monitor!=null){
+				monitor.addFile (new File (basePath+appFile));
+			}
         }catch(Exception e){
             System.out.println(e.toString());
             logger.error(e.toString());
@@ -142,7 +152,9 @@ public class Shell extends ScriptableObject implements FileListener{
 
             if(absoluteFileName.startsWith("file:")){
                 logger.debug("adding local file to reload monitor " + url.getFile());
-                monitor.addFile (new File (url.getFile()));
+				if(monitor!=null){
+					monitor.addFile (new File (url.getFile()));
+				}
             }
         }
         catch (IOException ex) {

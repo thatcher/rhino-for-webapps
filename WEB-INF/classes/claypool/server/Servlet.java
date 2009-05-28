@@ -27,6 +27,7 @@ public class Servlet extends HttpServlet {
     protected String dispatchFunction;//applicationLocation;
     protected String base;//applicationBasePath;
     protected String contextPath;//applicationBasePath;
+    protected String activeReload;
     private Shell shell;
     private RequestHandler requestHandler;
     
@@ -42,6 +43,9 @@ public class Servlet extends HttpServlet {
             localBase + "/WEB-INF/jsx/";
         this.shellFile = config.getInitParameter("shell");
         this.dispatchFunction  = config.getInitParameter("dispatch-function");
+        this.activeReload  = config.getInitParameter("active-reload")!=null?
+			config.getInitParameter("active-reload"):
+			"true";
         
         if(this.shell == null){
             //load global shell
@@ -52,10 +56,16 @@ public class Servlet extends HttpServlet {
                 getServletConfig().getServletContext().
                     log("APPLICATION SHELL : " + this.shellFile);
                 getServletConfig().getServletContext().
-                    log("APPLICATION DISPATCH METHOD : " + this.dispatchFunction);
+					log("APPLICATION DISPATCH METHOD : " + this.dispatchFunction);
+                getServletConfig().getServletContext().
+					log("APPLICATION ACTIVE RELOAD : " + this.activeReload);
                 // load the JavaScript files for the web app framework and
                 // the files for the specific web app.
-                this.shell = new Shell(this.contextPath, this.base, this.shellFile);
+                this.shell = new Shell(
+					this.contextPath, 
+					this.base, 
+					this.shellFile, 
+					this.activeReload );
             }catch (Exception ee) {
                 getServletConfig().getServletContext().
                     log(ee.toString());
