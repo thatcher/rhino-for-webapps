@@ -151,8 +151,8 @@ public class Shell extends ScriptableObject implements FileListener{
             in = new BufferedReader(input);
 
             if(absoluteFileName.startsWith("file:")){
-                logger.debug("adding local file to reload monitor " + url.getFile());
 				if(monitor!=null){
+	                logger.debug("adding local file to reload monitor " + url.getFile());
 					monitor.addFile (new File (url.getFile()));
 				}
             }
