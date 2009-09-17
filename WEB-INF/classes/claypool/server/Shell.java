@@ -37,9 +37,11 @@ public class Shell extends ScriptableObject implements FileListener{
         this.contextPath = contextPath;
         this.basePath = basePath;
         this.activeReload = activeReload;
-		if(activeReload == "true"){
+		if(activeReload.equalsIgnoreCase("true")){
+	        logger.info("Will monitor local files for changes: "+activeReload);
 			monitor = new FileMonitor (3000);
 		}else{
+	        logger.info("Will not monitor local files for changes: "+activeReload);
 			monitor = null;
 		}
         cx = Context.enter();
@@ -155,6 +157,8 @@ public class Shell extends ScriptableObject implements FileListener{
 	                logger.debug("adding local file to reload monitor " + url.getFile());
 					monitor.addFile (new File (url.getFile()));
 				}
+            }else{
+                logger.debug("cant add remote file to reload monitor " + url.getFile());
             }
         }
         catch (IOException ex) {
@@ -198,8 +202,8 @@ public class Shell extends ScriptableObject implements FileListener{
         //Dxmn jetty thinks maven is the shxt.  
         try{
             logger.info("Trying jetty reload trigger ( "+
-                this.contextPath + "/scripts/server/contexts/claypool.xml)");
-            File webXml = new File(this.contextPath + "/scripts/server/contexts/claypool.xml");
+                this.contextPath + "/server/contexts/jquery.claypool.xml)");
+            File webXml = new File(this.contextPath + "/server/contexts/jquery.claypool.xml");
             webXml.setLastModified(new java.util.Date().getTime());
         }catch(Exception e){
             //ignore logger.error(ioe.toString());
