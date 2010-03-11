@@ -1,1 +1,4 @@
+*~
 .project
+server/logs/*.log
+server/logs/*.log.*

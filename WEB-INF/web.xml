@@ -8,7 +8,7 @@
         <servlet-class>claypool.server.Log4jInit</servlet-class>
         <init-param>
           <param-name>log4j-init-file</param-name>
-          <param-value>WEB-INF/logging.conf</param-value>
+          <param-value>/WEB-INF/logging.conf</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>

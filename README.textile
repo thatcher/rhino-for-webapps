@@ -28,5 +28,5 @@ h2. Building:
 
 h3. Related Technology Links
 
-"Rhino - Java-based JavaScript engin)":http://www.mozilla.org/rhino/
+"Rhino - Java-based JavaScript engine":http://www.mozilla.org/rhino/
 

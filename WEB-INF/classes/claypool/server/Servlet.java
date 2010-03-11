@@ -21,13 +21,13 @@ import javax.servlet.http.HttpSession;
  */
 public class Servlet extends HttpServlet {
 
-    //protected ThreadLocal threadRequestHandler;
-    //protected RequestHandler requestHandler = null;
-    protected String shellFile;//applicationContainer;
-    protected String dispatchFunction;//applicationLocation;
-    protected String base;//applicationBasePath;
-    protected String contextPath;//applicationBasePath;
+    protected String shellFile;
+    protected String dispatchFunction;
+    protected String base;
+    protected String contextPath;
     protected String activeReload;
+    protected String applicationContext;
+    protected String optimizationLevel;
     private Shell shell;
     private RequestHandler requestHandler;
     
@@ -46,6 +46,7 @@ public class Servlet extends HttpServlet {
         this.activeReload  = config.getInitParameter("active-reload")!=null?
 			config.getInitParameter("active-reload"):
 			"true";
+		this.optimizationLevel = config.getInitParameter("opt-level");
         
         if(this.shell == null){
             //load global shell
@@ -59,13 +60,17 @@ public class Servlet extends HttpServlet {
 					log("APPLICATION DISPATCH METHOD : " + this.dispatchFunction);
                 getServletConfig().getServletContext().
 					log("APPLICATION ACTIVE RELOAD : " + this.activeReload);
+                getServletConfig().getServletContext().
+					log("APPLICATION OPT LEVEL : " + this.optimizationLevel);
                 // load the JavaScript files for the web app framework and
                 // the files for the specific web app.
                 this.shell = new Shell(
 					this.contextPath, 
 					this.base, 
 					this.shellFile, 
-					this.activeReload );
+					this.activeReload,
+					this.optimizationLevel
+                );
             }catch (Exception ee) {
                 getServletConfig().getServletContext().
                     log(ee.toString());
@@ -84,9 +89,12 @@ public class Servlet extends HttpServlet {
     }
 
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServlet#doGet(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see javax.servlet.http.HttpServlet#doGet(
+     * 	javax.servlet.http.HttpServletRequest, 
+     * 	javax.servlet.http.HttpServletResponse)
      */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) 
+    	throws ServletException, IOException {
         
         getServletConfig().getServletContext().
             log("CONTEXT PATHNAME : " + request.getContextPath());
@@ -110,33 +118,48 @@ public class Servlet extends HttpServlet {
         }
     }
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServlet#doPost(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see javax.servlet.http.HttpServlet#doPost(
+     * 	javax.servlet.http.HttpServletRequest, 
+     * 	javax.servlet.http.HttpServletResponse)
      */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+    	throws ServletException, IOException{
         doGet(request, response);
     }
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServlet#doPut(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see javax.servlet.http.HttpServlet#doPut(
+     * 	javax.servlet.http.HttpServletRequest, 
+     * 	javax.servlet.http.HttpServletResponse)
      */
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) 
+    	throws ServletException, IOException{
         doGet(request, response);
     }
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServlet#doDelete(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see javax.servlet.http.HttpServlet#doDelete(
+     * 	javax.servlet.http.HttpServletRequest, 
+     * 	javax.servlet.http.HttpServletResponse)
      */
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) 
+    	throws ServletException, IOException{
         doGet(request, response);
     }
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServlet#doHead(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see javax.servlet.http.HttpServlet#doHead(
+     * 	javax.servlet.http.HttpServletRequest, 
+     * 	javax.servlet.http.HttpServletResponse)
      */
-    protected void doHead(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    protected void doHead(HttpServletRequest request, HttpServletResponse response) 
+    	throws ServletException, IOException{
         doGet(request, response);
     }
     /* (non-Javadoc)
-     * @see javax.servlet.http.HttpServlet#doOptions(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+     * @see javax.servlet.http.HttpServlet#doOptions(
+     * 	javax.servlet.http.HttpServletRequest, 
+     * javax.servlet.http.HttpServletResponse)
      */
-    protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+    protected void doOptions(HttpServletRequest request, HttpServletResponse response) 
+    	throws ServletException, IOException{
         doGet(request, response);
     }
     

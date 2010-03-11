@@ -6,9 +6,9 @@ var dispatch_envjs = function(request, response){
     
     context_path = 
         request.attributes['javax.servlet.forward.context_path']||
-        'rhino-for-webapps';
+        cwd;
         
-    print("\n\t<-@Dispatching request for envjs example@->\n");  
+    print("\n\t<-@Dispatching request for envjs example@->\n" + context_path);  
     
     if(request.parameters.request){
         window.request = request; 

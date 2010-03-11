@@ -32,8 +32,10 @@ public class Shell extends ScriptableObject implements FileListener{
     private String contextPath;
     private String activeReload;
     private FileMonitor monitor;
+    private String optimizationLevel;
     
-    public Shell(String contextPath, String basePath, String appFile, String activeReload) {
+    public Shell(String contextPath, String basePath, String appFile, String activeReload,
+    		String optimizationLevel) {
         this.contextPath = contextPath;
         this.basePath = basePath;
         this.activeReload = activeReload;
@@ -46,6 +48,11 @@ public class Shell extends ScriptableObject implements FileListener{
 		}
         cx = Context.enter();
         cx.initStandardObjects(this);
+        this.optimizationLevel = optimizationLevel;
+        if(this.optimizationLevel != null){
+        	if(this.optimizationLevel == "-1")
+        		cx.setOptimizationLevel(-1);
+        }
         // host objects --------------
 
         // Give easy access to the global object by making a global property named "global".

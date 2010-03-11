@@ -44,18 +44,9 @@ public class RequestHandler
     public boolean processRequest(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
     	try{
-	        // ---------------------------------------------------------------------
-	        // STEP 0: if GET request then look for a static file first.
-	        // In production this step would be accomplished better by a proxy server
-	        //      eg. nginx or Apache's httpd
-	        // ---------------------------------------------------------------------
-	        
-	        // ...
-	        
-	        
 	        
 	        // ---------------------------------------------------------------------
-	        // STEP 1: prepare JavaScript request object from the Java request object and
+	        // prepare JavaScript request object from the Java request object and
 	        // create an empty response object that the JavaScript web framework and web app
 	        // will populate. You could send the Java request and response objects
 	        // to the JavaScript since Rhino allows mixing Java objects directly in 
@@ -198,31 +189,38 @@ public class RequestHandler
 	        int contentLength = -1;
 	        String contentType = "text/html";
 	        //TODO: Why the heck 1!!!
-	        for(int i = 1; i < responseHeadersFields.length; i++){
-	            String responseHeaderValue =  Context.toString(
-	                ScriptableObject.getProperty(
-	                    responseHeaders, 
-	                    responseHeadersFields[i].toString()
-	                ) 
-	            );
-	            logger.debug("Adding Header: " + responseHeadersFields[i] );
-	            logger.debug("Header Value: " + responseHeaderValue );
-	            if(!responseHeadersFields[i].toString().equalsIgnoreCase("")){
-	                if(responseHeadersFields[i].toString().equalsIgnoreCase("Content-Length")){
-	                    logger.debug("contentLength : " + responseHeaderValue);
-	                    contentLength = Integer.parseInt(responseHeaderValue.replace(" ",""));
-	                }else if(responseHeadersFields[i].toString().equalsIgnoreCase("Content-Type")){
-	                    logger.debug("contentType : " + responseHeaderValue);
-	                    contentType = responseHeaderValue;
-	                }
-	                response.addHeader(
-	                    responseHeadersFields[i].toString(),
-	                    Context.toString(
-	                        ScriptableObject.getProperty(
-	                            responseHeaders, 
-	                            responseHeadersFields[i].toString())
-	                    ));
-	            }
+	        for(int i = 0; i < responseHeadersFields.length; i++){
+	        	try{
+		            String responseHeaderValue =  Context.toString(
+		                ScriptableObject.getProperty(
+		                    responseHeaders, 
+		                    responseHeadersFields[i].toString()
+		                ) 
+		            );
+		            logger.debug("Adding Header: " + responseHeadersFields[i] );
+		            logger.debug("Header Value: " + responseHeaderValue );
+		            if(!responseHeadersFields[i].toString().equalsIgnoreCase("")){
+		                if(responseHeadersFields[i].toString().equalsIgnoreCase("Content-Length")){
+		                    logger.debug("contentLength : " + responseHeaderValue);
+		                    contentLength = Integer.parseInt(responseHeaderValue.replace(" ",""));
+		                    response.setContentLength(contentLength);
+		                }else if(responseHeadersFields[i].toString().equalsIgnoreCase("Content-Type")){
+		                    logger.debug("contentType : " + responseHeaderValue);
+		                    contentType = responseHeaderValue;
+		                    response.setContentType(contentType);
+		                }else{
+		                response.addHeader(
+		                    responseHeadersFields[i].toString(),
+		                    Context.toString(
+		                        ScriptableObject.getProperty(
+		                            responseHeaders, 
+		                            responseHeadersFields[i].toString())
+		                    ));
+		                }
+		            }
+	        	}catch(Exception e){
+	        		logger.debug(e);
+	        	}
 	        }
 	        if(contentType.indexOf("image") > -1){
 	            byte[] body = (byte[])Context.toType(
