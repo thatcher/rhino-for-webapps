@@ -15,32 +15,25 @@
     
     <!--
        All servlets below are the same class but are
-       used to serve different examples. The rhino-dispatcher
+       used to serve different examples. The dispatcher
        is the most general use of rhino and show the very 
        basics of how to use this codebase to javascript some
        servlets.
     -->
     <servlet>
-        <servlet-name>rhino-dispatcher</servlet-name>
-        <servlet-class>claypool.server.Servlet</servlet-class>    
-        <init-param>
-          <param-name>script-base</param-name>
-          <param-value>/WEB-INF/jsx/</param-value>
-        </init-param> 
-        <init-param>
-          <param-name>shell</param-name>
-          <param-value>shell.js</param-value>
-        </init-param>   
-        <init-param>
-          <param-name>dispatch-function</param-name>
-          <param-value>dispatch_jsx</param-value>
-        </init-param>  
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>claypool.server.Servlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>  
     <servlet-mapping>
-        <servlet-name>rhino-dispatcher</servlet-name>
-        <url-pattern>/jsx/</url-pattern>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/home/</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>/examples/</url-pattern>
+    </servlet-mapping>
+    
     
     <!--
         This servlet uses envjs to give you a taste of how to
@@ -48,24 +41,36 @@
         a simulated browser environment.
     -->
     <servlet>
-        <servlet-name>env-rhino-dispatcher</servlet-name>
+        <servlet-name>hello-dispatcher</servlet-name>
+        <servlet-class>claypool.server.Servlet</servlet-class>
+        <init-param>
+          <param-name>shell</param-name>
+          <param-value>scripts/helloworld/shell.js</param-value>
+        </init-param>   
+        <load-on-startup>1</load-on-startup>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name>hello-dispatcher</servlet-name>
+        <url-pattern>/examples/helloworld/</url-pattern>
+    </servlet-mapping>
+    
+    
+    <!--
+        This servlet uses envjs to give you a taste of how to
+        script the servlet more like a client by providing
+        a simulated browser environment.
+    -->
+    <servlet>
+        <servlet-name>envjs-dispatcher</servlet-name>
         <servlet-class>claypool.server.Servlet</servlet-class>    
         <init-param>
           <param-name>script-base</param-name>
           <param-value>/WEB-INF/examples/envjs</param-value>
         </init-param> 
-        <init-param>
-          <param-name>shell</param-name>
-          <param-value>shell.js</param-value>
-        </init-param>   
-        <init-param>
-          <param-name>dispatch-function</param-name>
-          <param-value>dispatch_envjs</param-value>
-        </init-param>  
         <load-on-startup>1</load-on-startup>
     </servlet>  
     <servlet-mapping>
-        <servlet-name>env-rhino-dispatcher</servlet-name>
+        <servlet-name>envjs-dispatcher</servlet-name>
         <url-pattern>/examples/envjs/</url-pattern>
     </servlet-mapping>
     
@@ -76,6 +81,6 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
+        <welcome-file>WEB-INF/root.jsp</welcome-file>
     </welcome-file-list>
 </web-app>

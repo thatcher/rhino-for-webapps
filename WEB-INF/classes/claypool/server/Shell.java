@@ -39,13 +39,19 @@ public class Shell extends ScriptableObject implements FileListener{
         this.contextPath = contextPath;
         this.basePath = basePath;
         this.activeReload = activeReload;
-		if(activeReload.equalsIgnoreCase("true")){
-	        logger.info("Will monitor local files for changes: "+activeReload);
-			monitor = new FileMonitor (3000);
-		}else{
-	        logger.info("Will not monitor local files for changes: "+activeReload);
-			monitor = null;
-		}
+        try{
+			if(activeReload.equalsIgnoreCase("true")){
+		        logger.info("Will monitor local files for changes: "+activeReload);
+				monitor = new FileMonitor (3000);
+			}else{
+		        logger.info("Will not monitor local files for changes: "+activeReload);
+				monitor = null;
+			}
+        }catch(Exception e){
+        	logger.warn("Will not monitor local files. Monitors may not be allowed."
+        			+e.toString());
+        	monitor = null;
+        }
         cx = Context.enter();
         cx.initStandardObjects(this);
         this.optimizationLevel = optimizationLevel;
@@ -196,9 +202,18 @@ public class Shell extends ScriptableObject implements FileListener{
     }
     
     public void fileChanged (File file) {
-        //Because the Context/Thread relationship the smartest thing I could
-        //think to do is modify/touch WEB-INF/web.xml to force a reload.
         logger.info("Detected change to application sources.  Reloading...");
+        //AppEngine seems to honor this
+        /*try{
+            logger.info("Trying default reload trigger ("+this.contextPath +"/WEB-INF/appengine-web.xml)");
+            File webXml = new File(this.contextPath + "/WEB-INF/appengine-web.xml");
+            webXml.setLastModified(new java.util.Date().getTime());
+            return;
+        }catch(Exception e){
+            //ignore 
+        	logger.error(e.toString());
+        }*/
+        //Tomcat
         try{
             logger.info("Trying default reload trigger ("+this.contextPath +"/WEB-INF/web.xml)");
             File webXml = new File(this.contextPath + "/WEB-INF/web.xml");
@@ -206,11 +221,11 @@ public class Shell extends ScriptableObject implements FileListener{
         }catch(Exception e){
             //ignore logger.error(ioe.toString());
         }
-        //Dxmn jetty thinks maven is the shxt.  
+        //Jetty 
         try{
             logger.info("Trying jetty reload trigger ( "+
-                this.contextPath + "/server/contexts/jquery.claypool.xml)");
-            File webXml = new File(this.contextPath + "/server/contexts/jquery.claypool.xml");
+                this.contextPath + "/jetty/contexts/contexts.xml)");
+            File webXml = new File(this.contextPath + "/jetty/contexts/root.xml");
             webXml.setLastModified(new java.util.Date().getTime());
         }catch(Exception e){
             //ignore logger.error(ioe.toString());

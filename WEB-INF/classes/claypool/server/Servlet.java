@@ -36,17 +36,29 @@ public class Servlet extends HttpServlet {
      */
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        String localBase = getServletConfig().getServletContext().getRealPath("/").toString();
+        String localBase = getServletConfig().
+        	getServletContext().
+        	getRealPath("/").toString();
         this.contextPath = localBase;
         this.base  = config.getInitParameter("script-base")!=null?
             localBase + config.getInitParameter("script-base"):
-            localBase + "/WEB-INF/jsx/";
-        this.shellFile = config.getInitParameter("shell");
-        this.dispatchFunction  = config.getInitParameter("dispatch-function");
-        this.activeReload  = config.getInitParameter("active-reload")!=null?
+            localBase + "/";
+        this.shellFile = 
+        	config.getInitParameter("shell")!=null?
+            config.getInitParameter("shell"):
+            "shell.js";
+        this.dispatchFunction  = 
+        	config.getInitParameter("dispatch-function")!=null?
+        	config.getInitParameter("dispatch-function"):
+        	"dispatch";
+        this.activeReload  = 
+        	config.getInitParameter("active-reload")!=null?
 			config.getInitParameter("active-reload"):
 			"true";
-		this.optimizationLevel = config.getInitParameter("opt-level");
+		this.optimizationLevel = 
+			config.getInitParameter("opt-level")!=null?
+			config.getInitParameter("opt-level"):
+			"-1";
         
         if(this.shell == null){
             //load global shell

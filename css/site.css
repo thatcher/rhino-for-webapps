@@ -1,0 +1,221 @@
+body {
+    padding: 0;
+    background-color: #011235;
+    padding-bottom:20px;
+    background-attachment:fixed;
+    font-family:Verdana, Geneva, Arial, Helvetica, sans-serif;
+    color:#000;
+}
+body #header, body #main, body #footer {
+    border:1px solid #000;
+    border-top:none;
+    border-bottom:none;
+    background-color: #FFF;
+    
+}
+body a{
+    text-decoration:none;
+}
+body form input{
+   margin:1em;
+}
+h1, h2, h3{
+    margin:0 0 1em 1em;
+}
+
+h2 span, p span, li span{
+    color:#C30000;
+}
+h3{
+    color:#C30000;
+}
+h4{
+    color:#011235;
+    text-align: center;
+}
+body .border{
+    border:1px dashed #000;
+    border-top:none;
+    border-bottom:none;
+    overflow-x:auto;
+}
+
+/*****************************/
+
+#header{
+    margin-top:20px;   
+}
+#header h1{
+    margin:35px 0 0 0 ;
+    float:left;
+}
+#header img{
+    float:left;
+}
+#header div {
+    margin-bottom:0px;
+    padding:1em;
+}
+#header a {
+    border:none;
+}
+
+
+/*****************************/
+
+
+#global-nav {
+    margin-top:50px;
+    margin-bottom:0px;
+}
+#global-nav ul{
+    float:right;
+    margin-bottom:0px;
+    margin-right:5px;
+}
+
+#global-nav ul li{
+    list-style:none;
+    display:inline;
+}
+#global-nav  a{
+    border-bottom:1px dotted #fff;
+}
+#global-nav  a.stbutton{
+    border:none;
+}
+#global-nav  a:hover{
+    color:#C30000;
+}
+
+
+/*****************************/
+
+
+#main{
+    clear:both;
+}
+#main h3{
+    padding:4px;
+}
+#main div{
+    padding:10px;
+}
+#main div table, #main div pre{
+    margin-left:40px;
+    width:90%;
+}
+#main p , #main ul{
+    padding:0 0 0 20px;
+    font-family:"Trebuchet MS";
+    font-size:13px;
+}
+#main li{
+    list-style: none;
+}
+#main .deleted{
+    border-top:1px dotted #993333;
+    border-bottom:1px dotted #993333;
+    background-color:#1a1010;
+    padding:3px;
+}
+
+
+/*****************************/
+
+
+#welcome {
+    margin-bottom:0;
+}
+#welcome h3{
+    float:left;
+}
+#welcome p{
+    font-family:Helvetica;
+    font-size:12px;
+    margin:0 100px 10px;
+    
+}
+#welcome p img{
+    /*border:1px dashed #777;*/
+    padding:0.3em;
+    float:right;
+}
+
+/*****************************/
+
+#running pre { margin-left:100px }
+#examples { clear:both; }
+
+/****************************
+ * 
+ * #footer
+ * 
+ * */
+#footer {
+    text-align: right;
+} 
+#footer{
+    border-left:1px solid #777;
+    border-right:1px solid #777;
+    border-bottom:1px solid #777;
+}
+#footer div{
+    margin-top:0px;
+    padding: 0 1em;
+}
+
+
+
+
+
+/****************************
+ * 
+ * #blueprintbutton
+ * 
+ * */
+#blueprintbutton {
+    /*float: right;
+    margin-top: 85px;
+    margin-right: 24px;
+    vertical-align: middle;*/
+   
+   position:relative;
+   bottom:0;
+   left:0;
+} 
+
+
+
+
+
+/****************************
+ * 
+ * #sharethisbutton
+ * 
+ * */
+#sharethisbutton {
+    /*float: left;
+    margin:0;
+    padding-top:70px;*/
+   position:relative;
+   bottom:0;
+   left:0;
+   margin:0;
+}
+
+/****************************
+ * 
+ * #copyright
+ * 
+ * */
+#copyright {
+    color:#C30000;
+    margin:0;
+}
+#copyright blockquote{
+    margin:0;
+    padding:0;
+}
+/*****************************/
+

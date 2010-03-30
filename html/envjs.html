@@ -1,0 +1,144 @@
+<html>
+    <head>
+        <title>Claypool Server</title>
+        
+        <meta   content="en-us" 
+                http-equiv="Content-Language"/>
+        <meta   content="text/html; charset=utf-8" 
+                http-equiv="Content-Type"/>
+        <meta   name="keywords"
+                content="javascript, appengine, jetty, tomcat, java,
+                        rhino, webapps, servlet, jquery, envjs,
+                        claypool, thatcher, resig"/>
+        <meta   name="description"
+                content="Rhino-for-webapps is a simple bridge technology 
+                    for enabling development of webapps with javascript in 
+                    proven containers like Jetty, Tomcat, and of course
+                    Google AppEngine." />
+                    
+        <link   href="/css/blueprint/screen.css"   
+                type="text/css" 
+                media="screen, projection"
+                rel="stylesheet" />
+        <link   href="/css/sprite.css"   
+                type="text/css" 
+                media="screen, projection"
+                rel="stylesheet" />
+        <link   href="/css/site.css" 
+                type="text/css" 
+                rel="stylesheet" />
+    </head>
+    <body class='container'>
+        <div id='header' class='container'>
+            <div class="column span-15 first">
+                <a href='/'>
+                    <img    src="/images/icon-brown.png" 
+                            alt="Rhino For Webapps " 
+                            height='80px'
+                            style='float:left;'/>
+                    
+                    <h1 style='float:left;'>
+                        Javascript on AppEngine
+                    </h1>
+                </a> 
+            </div> 
+            <div class="column span-7 prepend-top last" id='global-nav' >
+                <ul >
+                    <li><a href="/">home</a></li> | 
+                    <li><a href="/examples/">examples</a></li> | 
+                    <li>
+                        <span id="sharethisbutton">
+                            <script type="text/javascript" 
+                                    src="http://w.sharethis.com/widget/?tabs=web%2Cpost%2Cemail&amp;charset=utf-8&amp;style=default&amp;publisher=b0f530fc-b206-4fb8-b8a8-478191e675c2&amp;headerbg=%23c20000&amp;linkfg=%23c20000">
+                                    <!-- -->
+                            </script>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id='main' class='container'>
+            <div id='welcome'>
+                <h3>envjs</h3>
+                <p>
+                    Envjs is a bridge for running browser javascript without a browser.
+                    It was originally developed by John Resig and is now supported by 
+                    The Envjs Team.  It's MIT/GPL and freely available <a 
+                    href='http://github.com/thatcher'>here</a>
+                </p>
+                <p>
+                    With envjs, you can load html files that run just like they would
+                    in the browser, including making use of your favorite libraries
+                    like jQuery. This file ( which is actually <a 
+                    href='/html/envjs.html' target='_blank'>/html/envjs.html </a> ) can 
+                    be compared to itself loaded in your browser
+                </p>
+            </div>
+                <h4 id='userAgent'></h4>
+            <div class='span-23'>
+                <h2><span>navigator</span></h2>
+                <div class='span-13 push-1 border clear'>
+                    <ul id="navigatorDetails"></ul>
+                </div>
+            </div>
+            <div class='span-23'>
+                <h2><span>location</span></h2>
+                <div class='span-13 push-1 border clear'>
+                    <ul id="locationDetails"></ul>
+                </div>
+            </div>
+            <div class='span-23'>
+                <h2><span>window</span></h2>
+                <div class='span-13 push-1 border clear'>
+                    <ul id="globalDetails"></ul>
+                </div>
+            </div>
+        </div>
+        <div id='footer' class='container'>
+            <div id='copyright' style='text-align:center;'>
+                <img id="claypool-logo" 
+                     src="/images/claypool-button.png" 
+                     alt="jquery-claypool" 
+                     title="This site uses javascript on google apps eninge" 
+                     width="80" 
+                     height="15"
+                     style='float:left;'/>
+                <em>copyright 2009-2010 rhino-for-webapps team</em>
+                <img id="blueprint-logo" 
+                     src="/images/button.png" 
+                     alt="blueprint" 
+                     title="This site uses blueprint-css" 
+                     width="80" 
+                     height="15"
+                     style='float:right;'/> 
+            </div>
+            <div id='date' style='text-align:center;margin:0 0 10px 0;padding:0;' >
+            </div>
+        </div>
+        <script type="text/javascript">
+            var detail = function (id,obj,name){
+                var prop, list = document.getElementById(id);
+                for(prop in obj){
+                    var list_item = document.createElement('li');
+                    var item_text = 
+                        typeof( obj[prop] ) == 'function'?
+                            document.createTextNode(name+"."+prop+" = function()"):
+                            document.createTextNode(name+"."+prop+" = "+obj[prop]);
+                    list_item.appendChild(item_text);
+                    list.appendChild(list_item);
+                }
+            };
+            detail('navigatorDetails',  window.navigator, "navigator");
+            detail('locationDetails',  window.location, "location");
+            detail('globalDetails', window, "window");
+            
+            document.getElementById('date').appendChild(
+                document.createTextNode(new Date()+'')
+            );
+            document.getElementById('userAgent').appendChild(
+                document.createTextNode(navigator.userAgent)
+            );
+            
+        </script>
+    </body>
+</html>

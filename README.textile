@@ -1,11 +1,48 @@
 
-h1. rhino-for-webapps : A simple javascipting platform for java serlvet containers
+h1. Rhino-for-Webapps : A JavaScript bridge for Google App Engine
 
-<strong>Developed by Chris Thatcher</strong>
+Rhino-for-webapps is a simple bridge technology for enabling development of
+webapps with javascript in proven containers like Jetty, Tomcat, and of course
+Google AppEngine.  It provides as little as possible and is not itself an
+application framework,  only the lowest common denominator.  
 
-h3. Major Contributers:
+Rhino is of course Mozilla's wonderful javascript engine for use in the jvm, 
+giving you both the elegance of the javascript language and E4X along with 
+the leverage of being able to script with java libraries for image manipulation,
+data storage and analytics, network i/o operations etc.
 
-"Chris Thatcher":http://github.com/thatcher
+h2. Web Site 
+
+"http://rhino-for-webapps.appspot.com/":http://rhino-for-webapps.appspot.com/
+
+(witten with Javascript, running on this software, on Google AppEngine)
+
+h2. Running with bundled Jetty server:
+
+@$>cd /path/to/rhino-for-webapps/@
+@$>./server.sh start@ 
+ 
+Then visit http://localhost:8080/ 
+
+h2. Running in Tomcat
+ 
+Put it in tomcat/webapps/ROOT and visit http://localhost:8080/ 
+  
+h2. Running in Google App Engine
+
+@$> /path/to/appengine/bin/dev_appserver.sh /path/to/rhino-for-webapps/@
+
+h2. Building Source
+
+ * project is ready to go
+ * source files lib in WEB-INF/classes
+ 
+@$> ant @
+
+
+h3. Related Technology Links
+
+"Rhino - Java-based JavaScript engine":http://www.mozilla.org/rhino/
 
 h2. GitHub repositories:
 
@@ -18,15 +55,3 @@ h2. Mailing List:
 h2. Lighthouse (Bug Tracking):
 
 "Lighthouse rhino-for-webapps":http://claypooljs.lighthouseapp.com/projects/26082-rhino-for-webapps/
-
-h2. Building:
-
- Just put it in tomcat/webapps and visit http://localhost:8080/rhino-for-webapps/ and you should see 'Hello World'
-
- * project is ready to go
- * run "ant compile" (project should be located in tomcat/webapps to have access to the servlet.jar)
-
-h3. Related Technology Links
-
-"Rhino - Java-based JavaScript engine":http://www.mozilla.org/rhino/
-

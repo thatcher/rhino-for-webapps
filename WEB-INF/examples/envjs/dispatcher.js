@@ -1,26 +1,18 @@
 //In this simple example, we've already preloaded
 //env.rhino.js
 
-var context_path = "";
-var dispatch_envjs = function(request, response){
+var url = "";
+var dispatch = function(request, response){
     
-    context_path = 
-        request.attributes['javax.servlet.forward.context_path']||
-        cwd;
+    url = 'http://'+request.serverName;
+    if(request.serverPort)
+        url += ':'+request.serverPort;
+    url += '/html/envjs.html';
         
-    print("\n\t<-@Dispatching request for envjs example@->\n" + context_path);  
+    print("Dispatching request for envjs example" + url);  
     
-    if(request.parameters.request){
-        window.request = request; 
-        window.location = context_path+'/WEB-INF/examples/envjs/request.html';
-        response.body = window.document.innerHTML;
-    }else if(request.parameters.status){ 
-        window.location = context_path+'/WEB-INF/examples/envjs/status.html';  
-        response.body = window.document.innerHTML;
-    }else{
-        window.location = context_path+'/WEB-INF/examples/envjs/index.html';
-        response.body = window.document.innerHTML;
-    }
+    window.location = url;  
+    response.body = window.document.innerHTML;
     
     response.headers = {  
         status : 200,

@@ -1,0 +1,114 @@
+
+ /****************************
+ * 
+ * #admin forms
+ * 
+ * */
+body #main form input{
+    background-color:#000;
+    color:#FFF;
+    margin:1px;
+}
+
+body #main form .ss_sprite{
+    color:#567;
+}
+body #main form .ss_sprite a{
+    font-size:10px;
+    color:#567;
+}
+
+#main form textarea{
+    background-color:#000;
+    color:#FFF;
+    margin:0;
+    border:none;
+    font-family:Verdana,Geneva,Arial,Helvetica,sans-serif;
+    font-size:12px;
+    width:100%;
+}
+
+#main form input.submit{
+    border: 1px dotted #fff;
+    float:right;
+}
+
+/*****************************/
+#main #editArtist #name{
+    text-align:right;
+    font-size:14px;
+    font-weight: bold;
+}
+#main #editArtist #image{
+    text-align:right;
+}
+
+#main #editArtist #description{
+    text-align:left;
+}
+
+#main #editArtist #image{
+    width:100%;
+}
+
+#main #editArtist input.submit{
+    float:right;
+    font-size:14px;
+    font-weight: bold;
+}
+/*****************************/
+
+#main #editRelease textarea{
+    height:130px;
+}
+#main #editRelease ol input{
+    padding:2px;
+    width:auto;
+}
+
+
+/*****************************/
+#main div.pressing textarea{
+    height:140px;
+}
+
+/*****************************/
+
+
+#main #news form textarea.description{
+    height:110px;
+}
+#main #news form span.title{
+    margin-left:60px;
+}
+#main #news form input.title{
+    width:300px;
+    font-size:13px;
+    margin-left:60px;
+}
+#main #news form input.submit{
+    padding:2px;
+    margin-bottom:20px;
+    width:100px;
+}
+#main #news form .date {
+    text-align:right;
+    width:200px;
+    float:right;
+    padding:0;
+    height:36px;
+    font-size:12px;
+}
+#main #news hr {
+    background-color:#567;
+}
+
+/*****************************/
+
+#main #events form input, #main #events form textarea{
+    text-align:center;
+}
+#main #events span.date{
+    margin-top:-20px;
+}
+
