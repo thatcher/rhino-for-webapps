@@ -126,7 +126,21 @@ public class RequestHandler
 	        while(paramNames.hasMoreElements()) {
 	          String paramName = (String)paramNames.nextElement();
 	          // NOTE use getParameterValues() if could be more than one of the parameter with the same name.
-	          ScriptableObject.defineProperty(parameters, paramName,  request.getParameter(paramName), 0);
+	          String[] values = request.getParameterValues(paramName);
+	          if(values.length > 1){
+	        	  Scriptable array = shell.getContext().newArray(shell, values.length);
+	        	  for(int i=0;i<values.length;i++){
+	        		  array.put(i, array, values[i]);
+	        	  }
+	        	  ScriptableObject.defineProperty(
+        			  parameters, 
+        			  paramName,  
+        			  array, 
+        			  0
+	        	  );
+	          }else{
+	        	  ScriptableObject.defineProperty(parameters, paramName,  request.getParameter(paramName), 0);
+	          }
 	        }
 	        
 	        ScriptableObject.defineProperty(req, "pathInfo",            request.getPathInfo(), 0);
