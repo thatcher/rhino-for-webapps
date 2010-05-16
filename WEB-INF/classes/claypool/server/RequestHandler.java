@@ -139,7 +139,14 @@ public class RequestHandler
         			  0
 	        	  );
 	          }else{
-	        	  ScriptableObject.defineProperty(parameters, paramName,  request.getParameter(paramName), 0);
+	        	  String paramValue = request.getParameter(paramName);
+	        	  logger.debug("parameter -> "+paramName+" : "+paramValue);
+	        	  ScriptableObject.defineProperty(
+	        	      parameters, 
+	        	      paramName,  
+	        	      paramValue != null ? paramValue : "", 
+	        	      0
+	        	  );
 	          }
 	        }
 	        
