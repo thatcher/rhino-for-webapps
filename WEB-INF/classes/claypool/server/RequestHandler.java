@@ -164,6 +164,13 @@ public class RequestHandler
 	        ScriptableObject.defineProperty(req, "serverPort",          request.getServerPort(), 0);
 	        ScriptableObject.defineProperty(req, "servletPath",         request.getServletPath(), 0);
 	        
+	        //user principle properties
+	        if( request.getUserPrincipal() == null){
+		        ScriptableObject.defineProperty(req, "userPrincipal",  null, 0);
+	        }else{
+		        ScriptableObject.defineProperty(req, "userPrincipal",  request.getUserPrincipal().getName(), 0);
+	        }
+	        
 	        //TODO add session object and it's properties
 	        
 	        // Create the empty JavaScript response object
@@ -254,12 +261,12 @@ public class RequestHandler
 	                ScriptableObject.getProperty(res, "body")
 	            );
 	            if(! (contentLength > -1) ){
-	                contentLength = body.length();
-	                response.setContentLength(contentLength);
-	                logger.debug("Actual Body Length ===> " + contentLength);
-	                response.getWriter().println(body);
-					logger.debug("Response Body : " + body);
+	                contentLength = body.getBytes("UTF-8").length;
 	            }
+                response.setContentLength(contentLength);
+                logger.debug("Actual Body Length ===> " + contentLength);
+                response.getWriter().println(body);
+				logger.debug("Response Body : " + body);
 	        }	
         }catch(Exception e){
             logger.error(e);
