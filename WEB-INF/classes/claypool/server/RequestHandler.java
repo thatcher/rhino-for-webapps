@@ -260,9 +260,9 @@ public class RequestHandler
 	            String body = Context.toString(
 	                ScriptableObject.getProperty(res, "body")
 	            );
-	            if(! (contentLength > -1) ){
+	            //if(! (contentLength > -1) ){
 	                contentLength = body.getBytes("UTF-8").length;
-	            }
+	            //}
                 response.setContentLength(contentLength);
                 logger.debug("Actual Body Length ===> " + contentLength);
                 response.getWriter().println(body);
