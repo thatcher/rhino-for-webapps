@@ -24,7 +24,7 @@ var site = {
             page: 'examples',
             title: 'Rhino For Webapps - Examples',
             context: request.contextPath
-        }
+        };
         //Uses E4x if you not familiar check it out.  Much cleaner than trying
         //to quote a big string plus I've hardly touched the surface of whats possible
         //Let me know if you do some creative stuff with it!
